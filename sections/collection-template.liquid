@@ -35,23 +35,26 @@
         <noscript>
           <div class="collection-hero__image" style="background-image: url({{ collection.image | img_url: '2048x600', crop: 'top' }});"></div>
         </noscript>
-        <div class="collection-hero__title-wrapper">
+        <!-- <div class="collection-hero__title-wrapper">
           <h1 class="collection-hero__title page-width">
               <span class="visually-hidden">{{ 'collections.general.collection_label' | t }}: </span>
               {{ collection.title }}
           </h1>
+        </div> -->
+     
+        {% if collection.description != blank %}
+        <div class="rte collection-description page-width">
+         <div><a href="{{ shop.url }}">Home</a> > {{ collection.title }}</div> 
+          {{ collection.description }}
         </div>
+      {% endif %}
       </div>
       {% if is_filter_by_available == false and section.settings.sort_enable == false %}
         <div class="page-width">
           <span class="filters-toolbar__product-count">{{ 'collections.general.items_with_count' | t: count: collection.products_count }}</span>
         </div>
       {% endif %}
-      {% if collection.description != blank %}
-        <div class="rte collection-description page-width">
-          {{ collection.description }}
-        </div>
-      {% endif %}
+      
     {% else %}
       <div class="page-width">
         <div class="section-header text-center">
@@ -71,7 +74,7 @@
       </div>
     {% endif %}
 
-    {% if is_filter_by_available or section.settings.sort_enable %}
+    <!-- {% if is_filter_by_available or section.settings.sort_enable %}
       <div class="filters-toolbar-wrapper{% if is_filter_by_available %} filters-toolbar--has-filter{% endif %}">
         <div class="page-width">
           <div class="filters-toolbar">
@@ -121,7 +124,7 @@
           </div>
         </div>
       </div>
-    {% endif %}
+    {% endif %} -->
   </header>
 
   <div class="page-width" id="Collection">

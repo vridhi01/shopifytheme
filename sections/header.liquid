@@ -158,6 +158,19 @@
 
     <nav class="mobile-nav-wrapper medium-up--hide critical-hidden" role="navigation">
       <ul id="MobileNav" class="mobile-nav">
+        <li class="mobile-nav__item border-bottom">
+          {% if shop.customer_accounts_enabled %}
+              {% if customer %}
+                  <a href="{{ routes.account_url }}" class="mobile-nav__link">
+                  <span class="mobile-nav__label">SIGN IN/REGISTER</span>
+                  </a>
+              {% else %}
+                  <a href="{{ routes.account_register_url }}" class="mobile-nav__link">
+                  <span class="mobile-nav__label">SIGN IN/REGISTER</span>
+                  </a>
+              {% endif %}
+            {% endif %}
+        </li>
         {% for link in linklists[section.settings.main_linklist].links %}
           {%- assign outerLoopIndex = forloop.index -%}
 
@@ -245,9 +258,11 @@
               >
                 <span class="mobile-nav__label">{{ link.title | escape }}</span>
               </a>
+            
             {% endif %}
           </li>
         {% endfor %}
+        
       </ul>
     </nav>
   </header>
