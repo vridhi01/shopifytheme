@@ -553,7 +553,63 @@ textarea {
 
 .text-center {
   text-align: center !important; }
-
+/* filter css */
+form.gf-controls-search-form {
+    display: none;
+}
+span.gf-summary {
+  display: none;
+}
+.sort-by.limit-by.hidden-xs {
+  display: none;
+}
+form.gf-controls-search-form {
+  display: none !important;
+}
+.gf-actions {
+  float: right;
+}
+.sort-by {
+  border: 3px solid black;
+  background-color: #fff !important;
+  width: 100%;
+}
+.sort-by-toggle {
+  padding: 0 100px 0 13px !important;
+}
+div#globo-dropdown-sort_options {
+  border: 1px solid black;
+}
+.globo-dropdown-custom__options span {
+  font-size: 14px;
+  padding: 3px 15px;
+  color: black;
+  font-family: 'Helvetica';
+}
+.h4.spf-product-card__title .titleofproduct {
+  font-size: 20px !important;
+  color: black;
+  font-weight: 500;
+}
+.gf-block-title span {
+  font-size: 15px;
+  color: #000000c7;
+}
+.gf-left .gf-option-block .gf-block-title h3:after, .gf-offcanvas .gf-option-block .gf-block-title h3:after {
+  display: none;
+}
+.gf-block-title h3 {
+  text-transform: capitalize;
+}
+.gf-block-title span {
+  font-size: 20px;
+}
+a.descriptionofproducts span {
+  color: #00000096;
+}
+a.titleofproducts {
+  font-size: 19px !important;
+}
 /*================ Build Responsive Grid Classes ================*/
 @media only screen and (max-width: 749px) {
   /* Whole */
@@ -2113,17 +2169,19 @@ body.prevent-scrolling {
   overflow: hidden;
   position: fixed;
   width: 100%; }
-  body.template-collection  .page-width {
-    *zoom: 1;
-    max-width: 967px;
-    margin: 0 auto;
+  body.template-collection .page-width {
+    /* display: inline-block;
+    width: 50%; */
+    padding: 64px;
 }
 body.template-cart .page-width {
   *zoom: 1;
   max-width: 967px;
   margin: 0 auto;
 }
-
+.rte.collection-description.page-width {
+  width: 50%;
+}
 body.template-product .page-width {
   *zoom: 1;
   max-width: 967px;
@@ -3168,9 +3226,11 @@ hr {
 /*================ Template | Collections ================*/
 .collection-hero {
   position: relative;
+  display: flex;
   overflow: hidden;
   margin-top: -55px;
-  margin-bottom: 22px; }
+  margin-bottom: 22px;
+}
   @media only screen and (min-width: 750px) {
     .collection-hero {
       margin-bottom: 35px; } }
@@ -3183,12 +3243,13 @@ hr {
       margin-bottom: 35px;
       margin-top: 35px; } }
 
-.collection-hero__image {
-  background-position: 50% 50%;
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: 300px;
-  opacity: 1; }
+      .collection-hero__image {
+        background-repeat: no-repeat;
+        background-size: cover;
+        opacity: 1;
+        width: 50%;
+        display: inline-block;
+    }
   @media only screen and (max-width: 749px) {
     .collection-hero__image {
       height: 180px; } }
@@ -7412,7 +7473,107 @@ body.template-collection .price {
 #CustomImageWrapper--2-518838878367 {
   height: 100%;
 }
+.collection-hero {
+  border-bottom: 2px solid black;
+  border-top: 2px solid black;
+}
 /* responsive media query */
+@media screen and (min-width: 2540px)
+{
+  .sectionstart {
+    width: 76% !important;
+  }
+  .divstyles {
+    margin-left: -44px !important;
+}
+  .page-widthy .slick-track {
+    margin-left: 66px !important;
+  }
+  .slide-img img {
+    margin-left: 258px!important;
+}
+.divstyle {
+  margin-left: 443px  !important;
+  margin-top: 11px  !important;
+}
+  h3.headingstyle {
+    font-size: 14px !important;
+  }
+  p.loremipsum {
+    font-size: 23px !important;
+  }
+  p.sitdolor {
+    font-size: 23px !important;
+}
+.sectionpart {
+  width: 77% !important;
+  margin: 92px auto !important;
+}
+.slidersection {
+  max-width: 97% !important;
+}
+h2.lesessentitlles {
+  max-width: 97%  !important;
+  font-size: 34px  !important;
+  padding-bottom: 44px  !important;
+}
+}
+@media screen and (min-width: 1950px)
+{
+  .slidersection {
+    max-width: 97%  !important;
+  }
+  h2.lesessentitlles {
+    max-width: 94% im !important;
+  }
+  .sectionstart {
+    width: 76%  !important;
+  }
+  .sectionpart {
+    width: 68%  !important;
+  }
+  .slick-track {
+    margin-left: -228px !important;
+  }
+  .page-widthy .slick-track {
+    margin-left: -12px;
+}
+}
+@media screen and (min-width: 1800px)
+{
+  .sectionstart {
+    width: 72%;
+    margin: 22px auto;
+  }
+  .page-widthy .slick-track {
+    margin-left: 81px;
+  }
+  .slide-img img {
+    margin-left: 93px;
+  }
+  .grid.grid--uniform.grid--flush-bottom {
+    width: 45%;
+  }
+  .slidersection {
+    max-width: 91%;
+  }
+  .slick-track {
+    margin-left: -70px;
+  }
+ .divstyles {
+  margin-left: 243px;
+ }
+ .sectionpart {
+  width: 70%;
+}
+.divstyle {
+  text-align: center;
+  margin-left: 131px;
+}
+h2.lesessentitlles {
+  max-width: 86%;
+}
+}
 @media screen and (max-width: 1160px)
 {
   .site-header__cart-count {
@@ -7793,7 +7954,7 @@ span.current.notranslate {
     height: 64px;
   }
   .grid.grid--uniform.grid--flush-bottom {
-    width: 69%;
+      width: 78%;
     margin: 0 auto;
 }
 .site-header .grid .grid__item.medium-up--one-quarter:last-child {
@@ -8203,6 +8364,20 @@ body.template-index.js-drawer-open.js-drawer-open-top.prevent-scrolling .grid__i
 .search-bar__submit {
   padding: 0 10px;
 }
+.site-header .grid .grid__item.medium-up--one-quarter:last-child {
+  width: 0% !important;
+  margin-left: 202px;
+}
+button.btn--link.site-header__icon.site-header__search-toggle.js-drawer-open-top {
+  width: 10%;
+  right: 87px;
+  position: absolute;
+}
+body.template-index.js-drawer-open.js-drawer-open-top.prevent-scrolling button.btn--link.site-header__icon.site-header__search-toggle.js-drawer-open-top {
+  margin-top: 29px;
+  width: 47px !important;
+  right:76px;
+}
 }
 @media screen and (max-width:384px)
 {
@@ -8277,6 +8452,10 @@ input.search-form__input.search-bar__input {
 }
 .search-bar__submit {
   right: -16px;
+}
+.site-header .grid .grid__item.medium-up--one-quarter:last-child {
+  width: 0%!important;
+  margin-left: 172px;
 }
 }
 @media screen and (max-width:360px)
@@ -8372,8 +8551,6 @@ input, textarea {
 }
 button.btn--link.site-header__icon.site-header__search-toggle.js-drawer-open-top {
   padding: 0px;
-  width: 10%;
-  margin-right: 76px;
 }
 body.template-index.js-drawer-open.js-drawer-open-top.prevent-scrolling button.btn--link.site-header__icon.site-header__search-toggle.js-drawer-open-top {
   width: 55%;
@@ -8384,5 +8561,9 @@ input.search-form__input.search-bar__input {
 }
 .search-bar__close .icon {
   margin-left: 15px;
+}
+.site-header .grid .grid__item.medium-up--one-quarter:last-child {
+  width: 0%!important;
+  margin-left: 162px;
 }
 }

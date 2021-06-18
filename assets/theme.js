@@ -733,6 +733,7 @@ slate.Variants = (function() {
       var selectedValues = this._getCurrentOptions();
       var variants = this.product.variants;
 
+
       var found = variants.find(function(variant) {
         return selectedValues.every(function(values) {
           return variant[values.index] === values.value;
@@ -746,6 +747,7 @@ slate.Variants = (function() {
      * Event handler for when a variant input changes.
      */
     _onSelectChange: function() {
+
       var variant = this._getVariantFromOptions();
 
       this.container.dispatchEvent(
