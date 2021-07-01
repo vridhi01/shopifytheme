@@ -36,111 +36,140 @@
   {% endcase %}
 
   <div class="grid product-single{% if section.settings.enable_payment_button %} product-single--{{ section.settings.media_size }}-media{% endif %}">
-    <div class="grid__item product-single__media-group {{ product_media_width }}{% if section.settings.media_size == 'full' %} product-single__media-group--full{% endif %}" data-product-single-media-group>
-      {%- assign featured_media = product.selected_or_first_available_variant.featured_media | default: product.featured_media -%}
+  
+      <div class="grid__item product-single__media-group {{ product_media_width }}{% if section.settings.media_size == 'full' %} product-single__media-group--full{% endif %}" data-product-single-media-group>
+        {%- assign featured_media = product.selected_or_first_available_variant.featured_media | default: product.featured_media -%}
 
-      {%- for media in product.media -%}
-        {% include 'media', media: media, featured_media: featured_media, height: height, enable_image_zoom: enable_image_zoom, image_zoom_size: product_image_zoom_size, image_scale: product_image_scale %}
-      {%- endfor -%}
+        {%- for media in product.media -%}
+          {% include 'media', media: media, featured_media: featured_media, height: height, enable_image_zoom: enable_image_zoom, image_zoom_size: product_image_zoom_size, image_scale: product_image_scale %}
+        {%- endfor -%}
 
-      <noscript>
-        {% capture product_image_size %}{{ height }}x{% endcapture %}
-        <img src="{{ featured_media | img_url: product_image_size, scale: product_image_scale }}" alt="{{ featured_media.alt }}" id="FeaturedMedia-{{ section.id }}" class="product-featured-media" style="max-width: {{ height }}px;">
-      </noscript>
+        <noscript>
+          {% capture product_image_size %}{{ height }}x{% endcapture %}
+          <img src="{{ featured_media | img_url: product_image_size, scale: product_image_scale }}" alt="{{ featured_media.alt }}" id="FeaturedMedia-{{ section.id }}" class="product-featured-media" style="max-width: {{ height }}px;">
+        </noscript>
 
-      {% assign first_3d_model = product.media | where: "media_type", "model" | first %}
+        {% assign first_3d_model = product.media | where: "media_type", "model" | first %}
 
-      {%- if first_3d_model -%}
-        <button
-          aria-label="{{ 'products.product.view_in_space_label' | t }}"
-          class="product-single__view-in-space"
-          data-shopify-xr
-          data-shopify-model3d-id="{{ first_3d_model.id }}"
-          data-shopify-title="{{ product.title | escape }}"
-          data-shopify-xr-hidden
-        >
-          {% include 'icon-3d-badge-full-color' %}<span class='product-single__view-in-space-text'>{{ 'products.product.view_in_space' | t }}</span>
-        </button>
-      {%- endif -%}
+        {%- if first_3d_model -%}
+          <button
+            aria-label="{{ 'products.product.view_in_space_label' | t }}"
+            class="product-single__view-in-space"
+            data-shopify-xr
+            data-shopify-model3d-id="{{ first_3d_model.id }}"
+            data-shopify-title="{{ product.title | escape }}"
+            data-shopify-xr-hidden
+          >
+            {% include 'icon-3d-badge-full-color' %}<span class='product-single__view-in-space-text'>{{ 'products.product.view_in_space' | t }}</span>
+          </button>
+        {%- endif -%}
 
 
-      {% if product.media.size > 1 %}
-        {% if product.media.size > 4 %}
-          {%- assign enable_thumbnail_slides = true -%}
-        {% endif %}
+        {% if product.media.size > 1 %}
+          {% if product.media.size > 4 %}
+            {%- assign enable_thumbnail_slides = true -%}
+          {% endif %}
 
-        <div data-thumbnail-slider>
-          <div class="thumbnails-wrapper{% if enable_thumbnail_slides == true %} slider-active{% endif %}" data-slider>
-            {% if enable_thumbnail_slides == true %}
-              <button type="button" class="btn btn--link medium-up--hide thumbnails-slider__btn thumbnails-slider__prev thumbnails-slider__prev--{{ section.id }}" data-slider-button>
-                {% include 'icon-chevron-left' %}
-                <span class="icon__fallback-text">{{ 'sections.slideshow.previous_slide' | t }}</span>
-              </button>
-            {% endif %}
-
-            <ul class="product-single__thumbnails product-single__thumbnails-{{ section.id }}" data-slider-container>
+          <div data-thumbnail-slider>
+            <div class="thumbnails-wrapper{% if enable_thumbnail_slides == true %} slider-active{% endif %}" data-slider>
               {% if enable_thumbnail_slides == true %}
-                <div class="product-single__thumbnails-slider-track" data-slider-track>
+                <button type="button" class="btn btn--link thumbnails-slider__btn thumbnails-slider__prev thumbnails-slider__prev--{{ section.id }}" data-slider-button>
+                  {% include 'icon-chevron-left' %}
+                  <span class="icon__fallback-text">{{ 'sections.slideshow.previous_slide' | t }}</span>
+                </button>
               {% endif %}
 
-              {% for media in product.media %}
-                <li class="product-single__thumbnails-item product-single__thumbnails-item--{{ section.settings.media_size }} {% if enable_thumbnail_slides == true %} product-single__thumbnails-item-slide{% endif %} js"{% if enable_thumbnail_slides == true %} data-slider-slide-index="{{ forloop.index0 }}" data-slider-item{% endif %}>
-                  <a href="{{ media.preview_image | img_url: product_image_zoom_size, scale: product_image_scale }}"
-                    class="text-link product-single__thumbnail product-single__thumbnail--{{ section.id }}"
-                    data-thumbnail-id="{{ section.id }}-{{ media.id }}"
-                    {% if enable_thumbnail_slides == true %} data-slider-item-link{% endif %}
-                    {% if enable_image_zoom %}data-zoom="{{ media.preview_image | img_url: product_image_zoom_size, scale: product_image_scale }}"{% endif %}>
+              <ul class="product-single__thumbnails product-single__thumbnails-{{ section.id }}" data-slider-container>
+                {% if enable_thumbnail_slides == true %}
+                  <div class="product-single__thumbnails-slider-track" data-slider-track>
+                {% endif %}
 
-                      {%- capture thumbnailAlt -%}
-                        {%- if media.media_type == 'video' or media.media_type == 'external_video' -%}
-                          {{ 'sections.featured_product.video_thumbnail_alt' | t: imageAlt: media.alt | escape }}
-                        {%- elsif media.media_type == 'model' -%}
-                          {{ 'sections.featured_product.model_thumbnail_alt' | t: imageAlt: media.alt | escape }}
-                        {%- else -%}
-                          {{ 'sections.featured_product.gallery_thumbnail_alt' | t: imageAlt: media.alt | escape }}
+                {% for media in product.media %}
+                  <li class="product-single__thumbnails-item product-single__thumbnails-item--{{ section.settings.media_size }} {% if enable_thumbnail_slides == true %} product-single__thumbnails-item-slide{% endif %} js"{% if enable_thumbnail_slides == true %} data-slider-slide-index="{{ forloop.index0 }}" data-slider-item{% endif %}>
+                    <a href="{{ media.preview_image | img_url: product_image_zoom_size, scale: product_image_scale }}"
+                      class="text-link product-single__thumbnail product-single__thumbnail--{{ section.id }}"
+                      data-thumbnail-id="{{ section.id }}-{{ media.id }}"
+                      {% if enable_thumbnail_slides == true %} data-slider-item-link{% endif %}
+                      {% if enable_image_zoom %}data-zoom="{{ media.preview_image | img_url: product_image_zoom_size, scale: product_image_scale }}"{% endif %}>
+
+                        {%- capture thumbnailAlt -%}
+                          {%- if media.media_type == 'video' or media.media_type == 'external_video' -%}
+                            {{ 'sections.featured_product.video_thumbnail_alt' | t: imageAlt: media.alt | escape }}
+                          {%- elsif media.media_type == 'model' -%}
+                            {{ 'sections.featured_product.model_thumbnail_alt' | t: imageAlt: media.alt | escape }}
+                          {%- else -%}
+                            {{ 'sections.featured_product.gallery_thumbnail_alt' | t: imageAlt: media.alt | escape }}
+                          {%- endif -%}
+                        {%- endcapture -%}
+
+                        <img class="product-single__thumbnail-image" src="{{ media.preview_image | img_url: '110x110', scale: 2 }}" alt="{{ thumbnailAlt }}">
+                        {%- if media.media_type == 'video' or media.media_type =='external_video' -%}
+                          <div class="product-single__thumbnail-badge">
+                            {% include 'icon-video-badge-full-color' %}
+                          </div>
                         {%- endif -%}
-                      {%- endcapture -%}
+                        {%- if media.media_type == 'model' -%}
+                          <div class="product-single__thumbnail-badge">
+                            {% include 'icon-3d-badge-full-color' %}
+                          </div>
+                        {%- endif -%}
+                    </a>
+                  </li>
+                {% endfor %}
 
-                      <img class="product-single__thumbnail-image" src="{{ media.preview_image | img_url: '110x110', scale: 2 }}" alt="{{ thumbnailAlt }}">
-                      {%- if media.media_type == 'video' or media.media_type =='external_video' -%}
-                        <div class="product-single__thumbnail-badge">
-                          {% include 'icon-video-badge-full-color' %}
-                        </div>
-                      {%- endif -%}
-                      {%- if media.media_type == 'model' -%}
-                        <div class="product-single__thumbnail-badge">
-                          {% include 'icon-3d-badge-full-color' %}
-                        </div>
-                      {%- endif -%}
-                  </a>
-                </li>
-              {% endfor %}
-
+                {% if enable_thumbnail_slides == true %}
+                  </div>
+                {% endif %}
+              </ul>
               {% if enable_thumbnail_slides == true %}
-                </div>
+                <button type="button" class="btn btn--link medium-up--hide thumbnails-slider__btn thumbnails-slider__next thumbnails-slider__next--{{ section.id }}" data-slider-button data-slider-button-next>
+                  {% include 'icon-chevron-right' %}
+                  <span class="icon__fallback-text">{{ 'sections.slideshow.next_slide' | t }}</span>
+                </button>
               {% endif %}
-            </ul>
-            {% if enable_thumbnail_slides == true %}
-              <button type="button" class="btn btn--link medium-up--hide thumbnails-slider__btn thumbnails-slider__next thumbnails-slider__next--{{ section.id }}" data-slider-button data-slider-button-next>
-                {% include 'icon-chevron-right' %}
-                <span class="icon__fallback-text">{{ 'sections.slideshow.next_slide' | t }}</span>
-              </button>
-            {% endif %}
+            </div>
           </div>
+        {% endif %}
+      </div>
+    
+ {% comment %}
+    <div class="product_images grid__item  product-single__media-group {{ product_media_width }}{% if section.settings.media_size == 'full' %} product-single__media-group--full{% endif %}" data-product-single-media-group>
+        <div class="thumb_images">
+        {% for image in product.images %}
+        <div class="prd_img">
+          <img src = "{{ image | img_url : "600x"}}" />
         </div>
-      {% endif %}
+       {% endfor %}
+      </div>
+     
+      <div class="main_images">
+        {% for image in product.images %}
+         <div class="prd_img">
+           <img src = "{{ image | img_url : "1200x"}}" />
+         </div>
+        {% endfor %}
+      </div>
     </div>
-
+    {% endcomment %}
     <div class="grid__item {{ product_description_width }}">
       <div class="product-single__meta">
-
-        <h1 class="product-single__title">{{ product.title }}</h1>
-        <script>window.performance.mark('debut:product:title_visible');</script>
-
-          <div class="product__price">
-            {% include 'product-price', variant: current_variant, show_vendor: section.settings.show_vendor %}
+        {% include 'breadcrumbs' %}
+        <div class="productpriceandtitle">
+          <div class="product_heading">
+            <h1 class="product-single__title">{{ product.title }}</h1>
           </div>
-
+         <script>window.performance.mark('debut:product:title_visible');</script>
+         <div class="product__price">
+              {% include 'product-price', variant: current_variant, show_vendor: section.settings.show_vendor %}
+            </div>
+        </div>
+        <div class="product-single__description rte">
+          {{ product.description }}
+        </div>
+       
+        <div class="gift-reggie-wishlist-button js-product-retractable">
+          <input type="submit" class="add-wishlist" value="Add to Favourites"></div>
+        </div>
           {%- if cart.taxes_included or shop.shipping_policy.body != blank -%}
             <div class="product__policies rte" data-product-policies>
               {%- if cart.taxes_included -%}
@@ -217,28 +246,55 @@
                 {%- if section.settings.enable_payment_button %} product-form__item--payment-button {%- endif -%}
                 {%- if product.has_only_default_variant %} product-form__item--no-variants {%- endif -%}"
               >
-                <!-- <button type="submit" name="add"
+                <button type="submit" name="add"
                   {% unless current_variant.available %} aria-disabled="true"{% endunless %}
                   aria-label="{% unless current_variant.available %}{{ 'products.product.sold_out' | t }}{% else %}{{ 'products.product.add_to_cart' | t }}{% endunless %}"
                   class="btn product-form__cart-submit{% if section.settings.enable_payment_button and product.selling_plan_groups == empty %} btn--secondary-accent{% endif %}"
                   {% if settings.enable_ajax %}aria-haspopup="dialog"{% endif %}
                   data-add-to-cart>
-                  <span data-add-to-cart-text>
+                  <span data-add-to-cart-text class="addtocartbutton">
                     {% unless current_variant.available %}
                       {{ 'products.product.sold_out' | t }}
                     {% else %}
                       {{ 'products.product.add_to_cart' | t }}
                     {% endunless %}
                   </span>
+                  <div class="plusicon">
+                    {% if current_variant.available %}
+                    {% include 'icon-plus' %}
+                    {% endif %}
+                  </div>
                   <span class="hide" data-loader>
                     {% include 'icon-spinner' %}
                   </span>
-                </button> -->
+                </button>
                 {% if section.settings.enable_payment_button %}
                   {{ form | payment_button }}
                 {% endif %}
               </div>
             </div>
+
+            <div class="productstab">
+              <ul class="tabs">
+                <li class="tab" data-content-id="tab-content-1">Description</li>
+                <li class="tab" data-content-id="tab-content-2">Size Guide</li>
+                <li class="tab" data-content-id="tab-content-3">Care + Material</li>
+              </ul>
+              <div id="tab-content-1" class="tab-content">
+                <div>{{product.metafields.description.Description}}</div>
+                <div class="closebutton">{% include 'icon-close.liquid' %}</div>
+              </div>
+              <div id="tab-content-2" class="tab-content">
+               <div>{{product.metafields.sizeguide.SizeGuide}}</div>
+               <div class="closebutton">{% include 'icon-close.liquid' %}</div>
+              </div>
+              <div id="tab-content-3" class="tab-content">
+                <div>{{product.metafields.carematerial.CareMaterial}}</div>
+                <div class="closebutton">{% include 'icon-close.liquid' %}</div>
+              </div>
+            </div>
+
+           
           {% endform %}
         </div>
 
@@ -269,9 +325,7 @@
         >
         </div>
 
-        <div class="product-single__description rte">
-          {{ product.description }}
-        </div>
+       
 
         {% if section.settings.show_share_buttons %}
           {% include 'social-sharing', share_title: product.title, share_permalink: product.url, share_image: product.featured_media %}

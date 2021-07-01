@@ -61,12 +61,19 @@
             </span>
           {%- endif -%}
 
-          <p class="text-center">
+          <p class="text-center submitbutton">
             <input type="submit" value="{{ 'customer.register.submit' | t }}" class="btn">
           </p>
-
         {% endform %}
+        <p class="loginbutton">
+          <button class="loginsbutton">
+            <a href="{{ routes.account_login_url }}" class="login">
+             <span class="login">LOGIN</span>
+           </a></button>
+        </p>
       </div>
     </div>
   </div>
 </div>
+
+
