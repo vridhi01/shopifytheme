@@ -733,7 +733,6 @@ slate.Variants = (function() {
       var selectedValues = this._getCurrentOptions();
       var variants = this.product.variants;
 
-
       var found = variants.find(function(variant) {
         return selectedValues.every(function(values) {
           return variant[values.index] === values.value;
@@ -747,7 +746,6 @@ slate.Variants = (function() {
      * Event handler for when a variant input changes.
      */
     _onSelectChange: function() {
-
       var variant = this._getVariantFromOptions();
 
       this.container.dispatchEvent(
@@ -9689,13 +9687,50 @@ function removeImageLoadingAnimation(image) {
 }
 
 
+// tabs
 $(document).ready(function(){
-  $('.collection-slider').each(function(){
-    var num_slides = $(this).data('slides');
-    $(this).slick({
-      slidesTOShow:num_slides,
-      infinite: true,
-      slidesToScroll: 3
-    });
+ tabs = document.querySelectorAll('.tab');
+	 tabsContent = document.querySelectorAll('.tab-content');
+
+	 tabs.forEach(function(tab)
+	 {
+		 tab.addEventListener('click',function(){
+       $('.productstab').addClass("productstabs");
+			 contentId = this.dataset.contentId;
+			 content = document.getElementById(contentId);
+			 tabsContent.forEach(function(content)
+			 {
+				content.classList.remove('active');
+			 });
+			 tabs.forEach(function(tab)
+			 {
+				tab.classList.remove('active');
+			 });
+			 this.classList.add('active');
+			 content.classList.add('active');
+		 });
+	 });
+
+  $('.closebutton').click(function(){
+  $('.tab-content').removeClass('active');
+  $('.productstab').removeClass("productstabs");
   });
+  
+  // $('.thumb_images').slick({
+  //   slidesToShow: 3,
+  //   slidesToScroll: 1,
+  //   asNavFor: '.main_images',
+  //   arrows: true,
+  //   centerMode: true,
+  //   focusOnSelect: true
+  // });
+  // $('.main_images').slick({
+  //   slidesToShow: 1,
+  //   slidesToScroll: 1,
+  //   arrows: true,
+  //   fade: false,
+  //   asNavFor: '.thumb_images'
+  // });
+
+    
 });

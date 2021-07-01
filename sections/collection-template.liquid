@@ -44,7 +44,7 @@
      
         {% if collection.description != blank %}
         <div class="rte collection-description page-width">
-         <div><a href="{{ shop.url }}">Home</a> > {{ collection.title }}</div> 
+          {% include 'breadcrumbs' %}
           {{ collection.description }}
         </div>
       {% endif %}
